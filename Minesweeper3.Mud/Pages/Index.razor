@@ -1,4 +1,5 @@
 ﻿@page "/"
+@inject Game Game
 
 <PageTitle>Minesweeper</PageTitle>
 
@@ -11,7 +12,7 @@
         <MudText>Mines</MudText>
         <MudText Typo="Typo.h6">000</MudText>
     </div>
-    <MudButton Variant="Variant.Filled">
+    <MudButton Variant="Variant.Filled" OnClick="NewGame">
         <MudIcon Icon="@Icons.Material.Filled.EmojiEmotions" Size="Size.Large" />
     </MudButton>
     <div>
@@ -19,3 +20,27 @@
         <MudText Typo="Typo.h6">000</MudText>
     </div>
 </div>
+
+@* Game cells *@
+@for (int y = 0; y < Game.Height; y++)
+{
+    <div class="d-flex justify-md-center">
+        @for (int x = 0; x < Game.Width; x++)
+        {
+            Cell cell = Game.Cells[(x, y)];
+            <MudButton 
+                Class="d-flex justify-center align-center border-2 border-solid mud-border-lines-default rounded-0"
+                Style="height:64px;width:64px">
+                <MudText Typo="Typo.h6">1</MudText>
+            </MudButton>
+        }
+    </div>
+}
+
+@code
+{
+    private void NewGame()
+    {
+        Game = Game.New(10, 10).RandomizeMines(10).Start();
+    }
+}
