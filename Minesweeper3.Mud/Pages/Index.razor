@@ -24,14 +24,27 @@
 @* Game cells *@
 @for (int y = 0; y < Game.Height; y++)
 {
-    <div class="d-flex justify-md-center">
+    <div class="d-flex justify-md-center" @oncontextmenu:preventDefault="true">
         @for (int x = 0; x < Game.Width; x++)
         {
             Cell cell = Game.Cells[(x, y)];
             <MudButton 
                 Class="d-flex justify-center align-center border-2 border-solid mud-border-lines-default rounded-0"
-                Style="height:64px;width:64px">
-                <MudText Typo="Typo.h6">1</MudText>
+                Style=@($"height:64px;width:64px;background-color:{GetBackgroundColor(cell)}")
+                @onclick="() => Pick(cell)"
+                @oncontextmenu="() => Flag(cell)">
+                @if (ShowNumber(cell))
+                {
+                    <MudText Typo="Typo.h6">@cell.Number</MudText>
+                }
+                else if (ShowFlag(cell))
+                {
+                    <MudIcon Icon="@Icons.Material.Filled.Flag" Size="@Size.Large" />
+                }
+                else if (ShowMine(cell))
+                {
+                    <MudIcon Icon="@Icons.Material.Filled.BrightnessHigh" Size="@Size.Large" />
+                }
             </MudButton>
         }
     </div>
@@ -42,5 +55,42 @@
     private void NewGame()
     {
         Game = Game.New(10, 10).RandomizeMines(10).Start();
+    }
+
+    private bool ShowNumber(Cell cell)
+    {
+        return cell.IsPicked && cell.Number > 0;
+    }
+
+    private bool ShowMine(Cell cell)
+    {
+        return cell.IsMine &&
+            (cell.IsPicked || Game.State == GameState.Lose);
+    }
+
+    private bool ShowFlag(Cell cell)
+    {
+        return cell.State == CellState.Flagged;
+    }
+
+    private void Pick(Cell cell)
+    {
+        Game.Pick(cell.X, cell.Y);
+    }
+
+    private void Flag(Cell cell)
+    {
+        Game.Flag(cell.X, cell.Y);
+    }
+
+    private string GetBackgroundColor(Cell cell)
+    {
+        if (cell.IsPicked && cell.IsMine)
+            return Colors.Red.Lighten1;
+        if (cell.State == CellState.Flagged && cell.IsMine == false && Game.State == GameState.Lose)
+            return Colors.Red.Lighten3;
+        if (cell.IsPicked)
+            return Colors.Grey.Darken2;
+        return "none";
     }
 }
