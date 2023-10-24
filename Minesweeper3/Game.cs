@@ -55,8 +55,17 @@ namespace Minesweeper3
 
         public Game Pick(int x, int y)
         {
-            Cells[(x, y)].Pick();
+            Cell cell = Cells[(x, y)];
+            cell.Pick();
+            if (cell.IsMine == true)
+                Lose();
             return this;
+        }
+
+        private void Lose()
+        {
+            State = GameState.Lose;
+            EndTime = DateTime.Now;
         }
     }
 

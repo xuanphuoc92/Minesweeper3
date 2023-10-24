@@ -93,5 +93,17 @@ namespace Minesweeper3.Test
             game.Pick(1, 0);
             game.Cells[(1, 0)].IsPicked.Should().BeTrue();
         }
+
+        [TestMethod]
+        public void _09_Lose()
+        {
+            Game game = Game.New(2, 1)
+                .SetMine(0, 0)
+                .Start();
+
+            game.State.Should().Be(GameState.Playing);
+            game.Pick(0, 0);
+            game.State.Should().Be(GameState.Lose);
+        }
     }
 }
