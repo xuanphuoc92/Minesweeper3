@@ -132,7 +132,7 @@ namespace Minesweeper3
     {
         public CellState State { get; private set; }
         public bool IsMine { get; private set; }
-        public bool IsPicked { get; private set; }
+        public bool IsPicked => State == CellState.Picked;
         public int Number { get; private set; }
         
         public int X { get; private set; }
@@ -144,7 +144,7 @@ namespace Minesweeper3
 
         public void Pick()
         {
-            IsPicked = true;
+            State = CellState.Picked;
         }
 
         public void SetMine()
