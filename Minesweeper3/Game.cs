@@ -52,6 +52,12 @@ namespace Minesweeper3
             StartTime = DateTime.Now;
             return this;
         }
+
+        public Game Pick(int x, int y)
+        {
+            Cells[(x, y)].Pick();
+            return this;
+        }
     }
 
     public enum GameState
@@ -63,6 +69,12 @@ namespace Minesweeper3
     {
         public CellState State { get; private set; }
         public bool IsMine { get; private set; }
+        public bool IsPicked { get; private set; }
+
+        public void Pick()
+        {
+            IsPicked = true;
+        }
 
         public void SetMine()
         {

@@ -69,5 +69,29 @@ namespace Minesweeper3.Test
             game.StartTime.Should().NotBeNull();
             game.StartTime.Should().BeOnOrAfter(now);
         }
+
+        [TestMethod]
+        public void _07_Pick()
+        {
+            Game game = Game.New(2, 1)
+                .SetMine(0, 0)
+                .Start();
+
+            game.Cells[(1, 0)].IsPicked.Should().BeFalse();
+            game.Cells[(1, 0)].Pick();
+            game.Cells[(1, 0)].IsPicked.Should().BeTrue();
+        }
+
+        [TestMethod]
+        public void _08_Pick_Game()
+        {
+            Game game = Game.New(2, 1)
+                .SetMine(0, 0)
+                .Start();
+
+            game.Cells[(1, 0)].IsPicked.Should().BeFalse();
+            game.Pick(1, 0);
+            game.Cells[(1, 0)].IsPicked.Should().BeTrue();
+        }
     }
 }
