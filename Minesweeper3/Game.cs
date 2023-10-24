@@ -28,6 +28,12 @@ namespace Minesweeper3
 
             return game;
         }
+
+        public Game SetMine(int x, int y)
+        {
+            Cells[(x, y)].SetMine();
+            return this;
+        }
     }
 
     public enum GameState
