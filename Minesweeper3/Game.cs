@@ -55,6 +55,9 @@ namespace Minesweeper3
 
         public Game Pick(int x, int y)
         {
+            if (State != GameState.Playing)
+                return this;
+
             Cell cell = Cells[(x, y)];
             cell.Pick();
             if (cell.IsMine == true)
