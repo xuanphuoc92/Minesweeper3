@@ -5,8 +5,13 @@ using System.Linq;
 
 namespace Minesweeper3
 {
-    public class Game
+    public class Game : IDisposable
     {
+        public void Dispose()
+        {
+            Cells.Clear();
+        }
+
         public int Width { get; private set; }
         public int Height { get; private set; }
         public DateTime? StartTime { get; private set; }
