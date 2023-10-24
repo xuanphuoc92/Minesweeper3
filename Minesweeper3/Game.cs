@@ -59,7 +59,19 @@ namespace Minesweeper3
             cell.Pick();
             if (cell.IsMine == true)
                 Lose();
+            CheckWin();
             return this;
+        }
+
+        private void CheckWin()
+        {
+            if (Cells.Values
+                .Where(c => c.IsMine == false)
+                .All(c => c.IsPicked == true))
+            {
+                State = GameState.Win;
+                EndTime = DateTime.Now;
+            }
         }
 
         private void Lose()
