@@ -31,16 +31,6 @@ namespace Minesweeper3.Test
         [TestMethod]
         public void _03_SetMine()
         {
-            Game game = Game.New(2, 1);
-            
-            game.Cells[(0, 0)].SetMine();
-            game.Cells[(0, 0)].IsMine.Should().BeTrue();
-            game.Cells[(1, 0)].IsMine.Should().BeFalse();
-        }
-
-        [TestMethod]
-        public void _04_SetMine_Game()
-        {
             Game game = Game.New(2, 1)
                 .SetMine(0, 0);
 
@@ -49,7 +39,7 @@ namespace Minesweeper3.Test
         }
 
         [TestMethod]
-        public void _05_RandomizeMines()
+        public void _04_RandomizeMines()
         {
             Game game = Game.New(10, 10)
                 .RandomizeMines(10);
@@ -59,7 +49,7 @@ namespace Minesweeper3.Test
         }
 
         [TestMethod]
-        public void _06_Start()
+        public void _05_Start()
         {
             DateTime now = DateTime.Now;
             Game game = Game.New(2, 1)
@@ -71,19 +61,7 @@ namespace Minesweeper3.Test
         }
 
         [TestMethod]
-        public void _07_Pick()
-        {
-            Game game = Game.New(2, 1)
-                .SetMine(0, 0)
-                .Start();
-
-            game.Cells[(1, 0)].IsPicked.Should().BeFalse();
-            game.Cells[(1, 0)].Pick();
-            game.Cells[(1, 0)].IsPicked.Should().BeTrue();
-        }
-
-        [TestMethod]
-        public void _08_Pick_Game()
+        public void _06_Pick()
         {
             Game game = Game.New(2, 1)
                 .SetMine(0, 0)
@@ -95,7 +73,7 @@ namespace Minesweeper3.Test
         }
 
         [TestMethod]
-        public void _09_Lose()
+        public void _07_Lose()
         {
             Game game = Game.New(2, 1)
                 .SetMine(0, 0)
@@ -107,7 +85,7 @@ namespace Minesweeper3.Test
         }
 
         [TestMethod]
-        public void _10_Win()
+        public void _08_Win()
         {
             Game game = Game.New(2, 1)
                 .SetMine(0, 0)
@@ -120,7 +98,7 @@ namespace Minesweeper3.Test
 
 
         [TestMethod]
-        public void _11_Pick_AfterLose()
+        public void _09_Pick_GameEnd()
         {
             Game game = Game.New(2, 1)
                 .SetMine(0, 0)
@@ -134,7 +112,7 @@ namespace Minesweeper3.Test
         }
 
         [TestMethod]
-        public void _12_Number()
+        public void _10_Number()
         {
             // [1][*][1][ ]
             Game game = Game.New(4, 1)
@@ -148,7 +126,7 @@ namespace Minesweeper3.Test
         }
 
         [TestMethod]
-        public void _13_SpreadPick()
+        public void _11_SpreadPick()
         {
             // [1][*][1][ ]
             // [1][1][1][ ]
@@ -165,7 +143,7 @@ namespace Minesweeper3.Test
         }
 
         [TestMethod]
-        public void _14_Flag()
+        public void _12_Flag()
         {
             // [1][*][1][ ]
             Game game = Game.New(4, 1)
@@ -186,7 +164,7 @@ namespace Minesweeper3.Test
 
 
         [TestMethod]
-        public void _15_Flag_GameEnd()
+        public void _13_Flag_GameEnd()
         {
             // [1][*][1][ ]
             Game game = Game.New(4, 1)
