@@ -15,6 +15,17 @@ namespace Minesweeper3.Test
             game.Start.Should().BeNull();
             game.End.Should().BeNull();
             game.State.Should().Be(GameState.Playing);
+            game.Cells.Count.Should().Be(2);
+        }
+
+        [TestMethod]
+        public void _02_Cells()
+        {
+            Game game = Game.New(2, 1);
+            game.Cells.Count.Should().Be(2);
+
+            game.Cells[(0, 0)].State.Should().Be(CellState.Default);
+            game.Cells[(0, 0)].IsMine.Should().BeFalse();
         }
     }
 }
