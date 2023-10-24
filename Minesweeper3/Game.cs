@@ -146,27 +146,28 @@ namespace Minesweeper3
         
         public int X { get; private set; }
         public int Y { get; private set; }  
-        public Cell(int x, int y)
+        
+        internal Cell(int x, int y)
         {
             X = x; Y = y;
         }
 
-        public void Pick()
+        internal void Pick()
         {
             State = CellState.Picked;
         }
 
-        public void SetMine()
+        internal void SetMine()
         {
             IsMine = true;
         }
 
-        public void SetNumber(int number)
+        internal void SetNumber(int number)
         {
             Number = number;
         }
 
-        public void Flag()
+        internal void Flag()
         {
             // Picked Cell cannot be flagged
             if (State == CellState.Picked) return; 
