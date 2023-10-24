@@ -8,8 +8,8 @@ namespace Minesweeper3
     {
         public int Width { get; private set; }
         public int Height { get; private set; }
-        public DateTime? Start { get; private set; }
-        public DateTime? End { get; private set; }
+        public DateTime? StartTime { get; private set; }
+        public DateTime? EndTime { get; private set; }
         public GameState State { get; private set; }
 
         public Dictionary<(int, int), Cell> Cells { get; private set; }
@@ -44,6 +44,12 @@ namespace Minesweeper3
                 .OrderBy(c => rnd.Next()) // Order randomly
                 .Take(mines) // Take first {mines} Cells
                 .ToList().ForEach(c => c.SetMine()); // Set as Mines
+            return this;
+        }
+
+        public Game Start()
+        {
+            StartTime = DateTime.Now;
             return this;
         }
     }

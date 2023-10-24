@@ -12,8 +12,8 @@ namespace Minesweeper3.Test
 
             game.Width.Should().Be(2);
             game.Height.Should().Be(1);
-            game.Start.Should().BeNull();
-            game.End.Should().BeNull();
+            game.StartTime.Should().BeNull();
+            game.EndTime.Should().BeNull();
             game.State.Should().Be(GameState.Playing);
             game.Cells.Count.Should().Be(2);
         }
@@ -56,6 +56,18 @@ namespace Minesweeper3.Test
 
             game.Cells.Values.Where(c => c.IsMine == true).Count().Should().Be(10);
             game.Cells.Values.Where(c => c.IsMine == false).Count().Should().Be(90);
+        }
+
+        [TestMethod]
+        public void _06_Start()
+        {
+            DateTime now = DateTime.Now;
+            Game game = Game.New(2, 1)
+                .SetMine(0, 0)
+                .Start();
+
+            game.StartTime.Should().NotBeNull();
+            game.StartTime.Should().BeOnOrAfter(now);
         }
     }
 }
