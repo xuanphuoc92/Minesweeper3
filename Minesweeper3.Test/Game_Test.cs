@@ -47,5 +47,15 @@ namespace Minesweeper3.Test
             game.Cells[(0, 0)].IsMine.Should().BeTrue();
             game.Cells[(1, 0)].IsMine.Should().BeFalse();
         }
+
+        [TestMethod]
+        public void _05_RandomizeMines()
+        {
+            Game game = Game.New(10, 10)
+                .RandomizeMines(10);
+
+            game.Cells.Values.Where(c => c.IsMine == true).Count().Should().Be(10);
+            game.Cells.Values.Where(c => c.IsMine == false).Count().Should().Be(90);
+        }
     }
 }

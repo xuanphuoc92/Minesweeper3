@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Minesweeper3
 {
@@ -32,6 +33,17 @@ namespace Minesweeper3
         public Game SetMine(int x, int y)
         {
             Cells[(x, y)].SetMine();
+            return this;
+        }
+
+        public Game RandomizeMines(int mines)
+        {
+            Random rnd = new Random();
+            Cells
+                .Values // Take all Cells
+                .OrderBy(c => rnd.Next()) // Order randomly
+                .Take(mines) // Take first {mines} Cells
+                .ToList().ForEach(c => c.SetMine()); // Set as Mines
             return this;
         }
     }
