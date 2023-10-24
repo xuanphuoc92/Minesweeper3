@@ -124,6 +124,9 @@ namespace Minesweeper3
 
         public Game Flag(int x, int y)
         {
+            if (State != GameState.Playing)
+                return this;
+
             Cells[(x, y)].Flag();
             return this;
         }
