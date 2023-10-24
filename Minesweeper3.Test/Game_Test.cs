@@ -27,5 +27,15 @@ namespace Minesweeper3.Test
             game.Cells[(0, 0)].State.Should().Be(CellState.Default);
             game.Cells[(0, 0)].IsMine.Should().BeFalse();
         }
+
+        [TestMethod]
+        public void _03_SetMine()
+        {
+            Game game = Game.New(2, 1);
+            
+            game.Cells[(0, 0)].SetMine();
+            game.Cells[(0, 0)].IsMine.Should().BeTrue();
+            game.Cells[(1, 0)].IsMine.Should().BeFalse();
+        }
     }
 }

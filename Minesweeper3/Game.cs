@@ -39,6 +39,11 @@ namespace Minesweeper3
     {
         public CellState State { get; private set; }
         public bool IsMine { get; private set; }
+
+        public void SetMine()
+        {
+            IsMine = true;
+        }
     }
 
     public enum CellState
