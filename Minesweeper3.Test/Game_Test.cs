@@ -132,5 +132,19 @@ namespace Minesweeper3.Test
             game.State.Should().Be(GameState.Lose);
             game.Cells[(1, 0)].IsPicked.Should().BeFalse();
         }
+
+        [TestMethod]
+        public void _12_Number()
+        {
+            // [1][*][1][ ]
+            Game game = Game.New(4, 1)
+                .SetMine(1, 0)
+                .Start();
+
+            game.Cells[(0, 0)].Number.Should().Be(1);
+            game.Cells[(1, 0)].Number.Should().Be(0);
+            game.Cells[(2, 0)].Number.Should().Be(1);
+            game.Cells[(3, 0)].Number.Should().Be(0);
+        }
     }
 }
