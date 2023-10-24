@@ -146,5 +146,22 @@ namespace Minesweeper3.Test
             game.Cells[(2, 0)].Number.Should().Be(1);
             game.Cells[(3, 0)].Number.Should().Be(0);
         }
+
+        [TestMethod]
+        public void _13_SpreadPick()
+        {
+            // [1][*][1][ ]
+            // [1][1][1][ ]
+            Game game = Game.New(4, 2)
+                .SetMine(1, 0)
+                .Start();
+
+            game.Pick(3, 0);
+            game.Cells[(0, 0)].IsPicked.Should().BeFalse();
+            game.Cells[(2, 0)].IsPicked.Should().BeTrue();
+            game.Cells[(3, 0)].IsPicked.Should().BeTrue();
+            game.Cells[(2, 1)].IsPicked.Should().BeTrue();
+            game.Cells[(3, 1)].IsPicked.Should().BeTrue();
+        }
     }
 }

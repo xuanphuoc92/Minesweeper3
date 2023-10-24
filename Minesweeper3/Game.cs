@@ -26,7 +26,7 @@ namespace Minesweeper3
 
             for (int x = 0; x < width; x++)
                 for (int y = 0; y < heigth; y++)
-                    game.Cells[(x,y)] = new Cell();
+                    game.Cells[(x,y)] = new Cell(x,y);
 
             return game;
         }
@@ -85,11 +85,24 @@ namespace Minesweeper3
                 return this;
 
             Cell cell = Cells[(x, y)];
-            cell.Pick();
+            SpreadPick(cell);
             if (cell.IsMine == true)
                 Lose();
             CheckWin();
             return this;
+        }
+
+        private void SpreadPick(Cell cell)
+        {
+            if (cell.IsPicked == true)
+                return;
+            cell.Pick();
+
+            if (cell.IsMine == true || cell.Number > 0)
+                return;
+            
+            List<Cell> aroundCells = GetAroundCells(cell.X, cell.Y);
+            aroundCells.ForEach(c => SpreadPick(c));
         }
 
         private void CheckWin()
@@ -121,6 +134,13 @@ namespace Minesweeper3
         public bool IsMine { get; private set; }
         public bool IsPicked { get; private set; }
         public int Number { get; private set; }
+        
+        public int X { get; private set; }
+        public int Y { get; private set; }  
+        public Cell(int x, int y)
+        {
+            X = x; Y = y;
+        }
 
         public void Pick()
         {
