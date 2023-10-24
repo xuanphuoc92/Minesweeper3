@@ -1,7 +1,7 @@
 namespace Minesweeper3.Test
 {
     [TestClass]
-    public class UnitTest1
+    public class Game_Test
     {
         [TestMethod]
         public void TestMethod1()

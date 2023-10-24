@@ -2,7 +2,7 @@
 
 namespace Minesweeper3
 {
-    public class Class1
+    public class Game
     {
 
     }
