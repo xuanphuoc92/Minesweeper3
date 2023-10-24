@@ -121,6 +121,12 @@ namespace Minesweeper3
             State = GameState.Lose;
             EndTime = DateTime.Now;
         }
+
+        public Game Flag(int x, int y)
+        {
+            Cells[(x, y)].Flag();
+            return this;
+        }
     }
 
     public enum GameState
@@ -155,6 +161,23 @@ namespace Minesweeper3
         public void SetNumber(int number)
         {
             Number = number;
+        }
+
+        public void Flag()
+        {
+            // Picked Cell cannot be flagged
+            if (State == CellState.Picked) return; 
+
+            if (State == CellState.Default)
+            {
+                State = CellState.Flagged;
+                return;
+            }
+            if (State == CellState.Flagged)
+            {
+                State = CellState.Default;
+                return;
+            }
         }
     }
 

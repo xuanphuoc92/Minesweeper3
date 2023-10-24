@@ -163,5 +163,25 @@ namespace Minesweeper3.Test
             game.Cells[(2, 1)].IsPicked.Should().BeTrue();
             game.Cells[(3, 1)].IsPicked.Should().BeTrue();
         }
+
+        [TestMethod]
+        public void _14_Flag()
+        {
+            // [1][*][1][ ]
+            Game game = Game.New(4, 1)
+                .SetMine(1, 0)
+                .Start();
+
+            game.Pick(0, 0)
+                .Flag(0 ,0) // Flag the already picked (0,0)
+                .Flag(1, 0)
+                .Flag(2, 0)
+                .Flag(2, 0); // Flag 2 times means unflagged
+
+            game.Cells[(0, 0)].State.Should().Be(CellState.Picked);
+            game.Cells[(1, 0)].State.Should().Be(CellState.Flagged);
+            game.Cells[(2, 0)].State.Should().Be(CellState.Default);
+            game.Cells[(3, 0)].State.Should().Be(CellState.Default);
+        }
     }
 }
