@@ -33,15 +33,15 @@
                 Style=@($"height:64px;width:64px;background-color:{GetBackgroundColor(cell)}")
                 @onclick="() => Pick(cell)"
                 @oncontextmenu="() => Flag(cell)">
-                @if (ShowNumber(cell))
+                @if (cell.Content == CellContent.Number)
                 {
                     <MudText Typo="Typo.h6">@cell.Number</MudText>
                 }
-                else if (ShowFlag(cell))
+                else if (cell.Content == CellContent.Flag)
                 {
                     <MudIcon Icon="@Icons.Material.Filled.Flag" Size="@Size.Large" />
                 }
-                else if (ShowMine(cell))
+                else if (cell.Content == CellContent.Mine)
                 {
                     <MudIcon Icon="@Icons.Material.Filled.BrightnessHigh" Size="@Size.Large" />
                 }
@@ -57,22 +57,6 @@
         Game = Game.New(10, 10).RandomizeMines(10).Start();
     }
 
-    private bool ShowNumber(Cell cell)
-    {
-        return cell.IsPicked && cell.Number > 0;
-    }
-
-    private bool ShowMine(Cell cell)
-    {
-        return cell.IsMine &&
-            (cell.IsPicked || Game.State == GameState.Lose);
-    }
-
-    private bool ShowFlag(Cell cell)
-    {
-        return cell.State == CellState.Flagged;
-    }
-
     private void Pick(Cell cell)
     {
         Game.Pick(cell.X, cell.Y);
@@ -85,12 +69,12 @@
 
     private string GetBackgroundColor(Cell cell)
     {
-        if (cell.IsPicked && cell.IsMine)
-            return Colors.Red.Lighten1;
-        if (cell.State == CellState.Flagged && cell.IsMine == false && Game.State == GameState.Lose)
-            return Colors.Red.Lighten3;
-        if (cell.IsPicked)
-            return Colors.Grey.Darken2;
-        return "none";
+        return cell.Background switch
+        {
+            CellBackground.PickedMine => Colors.Red.Lighten1,
+            CellBackground.WrongFlag => Colors.Red.Lighten3,
+            CellBackground.Picked => Colors.Grey.Darken2,
+            _ => "none"
+        };
     }
 }
