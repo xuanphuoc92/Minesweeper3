@@ -223,5 +223,26 @@ namespace Minesweeper3.Test
             game.Cells[(3, 0)].Background.Should().Be(CellBackground.PickedMine);
             game.Cells[(4, 0)].Background.Should().Be(CellBackground.Default);
         }
+
+        [TestMethod]
+        public void _16_MineCount() 
+        {
+            // [1][*][2][*][1]
+            using Game game = Game.New(5, 1)
+                .SetMine(1, 0)
+                .SetMine(3, 0)
+                .Start();
+
+            game.MineCount.Should().Be(2);
+            game.Flag(1, 0);
+            game.MineCount.Should().Be(1);
+            game.Flag(3, 0);
+            game.MineCount.Should().Be(0);
+            game.Flag(3, 0);
+            game.MineCount.Should().Be(1);
+            game.Pick(2, 0)
+                .Flag(2, 0); // Try flag a picked cell
+            game.MineCount.Should().Be(1);
+        }
     }
 }

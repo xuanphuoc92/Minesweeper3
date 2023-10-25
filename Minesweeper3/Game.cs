@@ -22,6 +22,8 @@ namespace Minesweeper3
         public Dictionary<(int, int), Cell> Cells { get; private set; }
             = new Dictionary<(int, int), Cell>();
 
+        public int MineCount { get; private set; } = 0;
+
         public static Game New(int width, int heigth)
         {
             Game game = new Game()
@@ -40,6 +42,7 @@ namespace Minesweeper3
         public Game SetMine(int x, int y)
         {
             Cells[(x, y)].SetMine();
+            MineCount++;
             return this;
         }
 
@@ -51,6 +54,7 @@ namespace Minesweeper3
                 .OrderBy(c => rnd.Next()) // Order randomly
                 .Take(mines) // Take first {mines} Cells
                 .ToList().ForEach(c => c.SetMine()); // Set as Mines
+            MineCount += mines;
             return this;
         }
 
@@ -133,7 +137,10 @@ namespace Minesweeper3
             if (State != GameState.Playing)
                 return this;
 
-            Cells[(x, y)].Flag();
+            Cell cell = Cells[(x, y)];
+            cell.Flag();
+            if (cell.State == CellState.Flagged) MineCount--;
+            if (cell.State == CellState.Default) MineCount++;
             return this;
         }
     }
