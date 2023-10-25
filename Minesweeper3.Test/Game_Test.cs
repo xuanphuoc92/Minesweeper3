@@ -51,11 +51,14 @@ namespace Minesweeper3.Test
         [TestMethod]
         public void _05_Start()
         {
-            DateTime now = DateTime.Now;
             Game game = Game.New(2, 1)
                 .SetMine(0, 0)
                 .Start();
 
+            game.StartTime.Should().BeNull();
+            DateTime now = DateTime.Now;
+            
+            game.Pick(1, 0);
             game.StartTime.Should().NotBeNull();
             game.StartTime.Should().BeOnOrAfter(now);
         }
@@ -248,14 +251,14 @@ namespace Minesweeper3.Test
         [TestMethod]
         public void _17_GetLiveSeconds()
         {
-            using Game game = Game.New(2, 1)
+            using Game game = Game.New(3, 1)
                 .SetMine(0, 0);
             
             game.GetLiveSeconds().Should().Be(0);
             Task.Delay(1100).Wait();
             game.GetLiveSeconds().Should().Be(0);
             
-            game.Start();
+            game.Start().Pick(1, 0);
             Task.Delay(1100).Wait();
             game.GetLiveSeconds().Should().Be(1);
 

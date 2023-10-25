@@ -72,7 +72,6 @@ namespace Minesweeper3
                 for (int y = 0; y < Height; y++)
                     CalculateNumber(x, y);
 
-            StartTime = DateTime.Now;
             return this;
         }
 
@@ -99,6 +98,8 @@ namespace Minesweeper3
 
         public Game Pick(int x, int y)
         {
+            if (StartTime == null) StartTime = DateTime.Now;
+            
             if (State != GameState.Playing)
                 return this;
 
