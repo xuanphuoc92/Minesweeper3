@@ -182,5 +182,25 @@ namespace Minesweeper3.Test
             game.Cells[(2, 0)].State.Should().Be(CellState.Flagged);
             game.Cells[(3, 0)].State.Should().Be(CellState.Default);
         }
+
+        [TestMethod]
+        public void _14_CellContent()
+        {
+            // [1][*][2][*][1]
+            using Game game = Game.New(5, 1)
+                .SetMine(1, 0)
+                .SetMine(3, 0)
+                .Start();
+
+            game.Flag(0, 0)
+                .Pick(2, 0)
+                .Pick(1, 0);
+
+            game.Cells[(0, 0)].Content.Should().Be(CellContent.Flag);
+            game.Cells[(1, 0)].Content.Should().Be(CellContent.Mine);
+            game.Cells[(2, 0)].Content.Should().Be(CellContent.Number);
+            game.Cells[(3, 0)].Content.Should().Be(CellContent.Mine);
+            game.Cells[(4, 0)].Content.Should().Be(CellContent.Empty);
+        }
     }
 }

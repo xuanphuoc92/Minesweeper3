@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net.Mime;
 
 namespace Minesweeper3
 {
@@ -31,7 +32,7 @@ namespace Minesweeper3
 
             for (int x = 0; x < width; x++)
                 for (int y = 0; y < heigth; y++)
-                    game.Cells[(x,y)] = new Cell(x,y);
+                    game.Cells[(x,y)] = new Cell(x,y,game);
 
             return game;
         }
@@ -151,10 +152,11 @@ namespace Minesweeper3
         
         public int X { get; private set; }
         public int Y { get; private set; }  
+        private Game Game { get; set; }
         
-        internal Cell(int x, int y)
+        internal Cell(int x, int y, Game game)
         {
-            X = x; Y = y;
+            X = x; Y = y; Game = game;
         }
 
         internal void Pick()
@@ -188,10 +190,30 @@ namespace Minesweeper3
                 return;
             }
         }
+
+        public CellContent Content
+        {
+            get
+            {
+                if (IsPicked && Number > 0)
+                    return CellContent.Number;
+                if (IsMine && 
+                    (IsPicked || Game.State == GameState.Lose))
+                    return CellContent.Mine;
+                if (State == CellState.Flagged)
+                    return CellContent.Flag;
+                return CellContent.Empty;
+            }
+        }
     }
 
     public enum CellState
     {
         Default, Picked, Flagged
+    }
+
+    public enum CellContent
+    {
+        Empty, Number, Mine, Flag
     }
 }
