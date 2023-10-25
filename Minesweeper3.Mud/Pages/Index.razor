@@ -17,7 +17,7 @@
     </MudButton>
     <div>
         <MudText>Time</MudText>
-        <MudText Typo="Typo.h6">000</MudText>
+        <MudText Typo="Typo.h6">@Time</MudText>
     </div>
 </div>
 
@@ -52,9 +52,25 @@
 
 @code
 {
+    private int Time = 0;
+    private Timer Timer;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Timer = new Timer(Tick, null, 0, 1000);
+    }
+
+    private void Tick(object? _ = null)
+    {
+        Time = Game.GetLiveSeconds();
+        InvokeAsync(StateHasChanged);
+    }
+
     private void NewGame()
     {
         Game.Reset().RandomizeMines(10).Start();
+        Tick();
     }
 
     private void Pick(Cell cell)
