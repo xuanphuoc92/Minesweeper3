@@ -151,6 +151,13 @@ namespace Minesweeper3
             if (cell.State == CellState.Default) MineCount++;
             return this;
         }
+
+        public int GetLiveSeconds()
+        {
+            if (StartTime == null) return 0;
+            DateTime end = EndTime != null ? EndTime.Value : DateTime.Now;
+            return (int)(end - StartTime.Value).TotalSeconds;
+        }
     }
 
     public enum GameState

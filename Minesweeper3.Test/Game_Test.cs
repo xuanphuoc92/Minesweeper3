@@ -244,5 +244,24 @@ namespace Minesweeper3.Test
                 .Flag(2, 0); // Try flag a picked cell
             game.MineCount.Should().Be(1);
         }
+
+        [TestMethod]
+        public void _17_GetLiveSeconds()
+        {
+            using Game game = Game.New(2, 1)
+                .SetMine(0, 0);
+            
+            game.GetLiveSeconds().Should().Be(0);
+            Task.Delay(1100).Wait();
+            game.GetLiveSeconds().Should().Be(0);
+            
+            game.Start();
+            Task.Delay(1100).Wait();
+            game.GetLiveSeconds().Should().Be(1);
+
+            game.Pick(0, 0);
+            Task.Delay(1100).Wait();
+            game.GetLiveSeconds().Should().Be(1);
+        }
     }
 }
