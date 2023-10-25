@@ -54,7 +54,7 @@
 {
     private void NewGame()
     {
-        Game = Game.New(10, 10).RandomizeMines(10).Start();
+        Game.Reset().RandomizeMines(10).Start();
     }
 
     private void Pick(Cell cell)

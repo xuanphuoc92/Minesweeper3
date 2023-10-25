@@ -24,19 +24,27 @@ namespace Minesweeper3
 
         public int MineCount { get; private set; } = 0;
 
-        public static Game New(int width, int heigth)
+        public static Game New(int width, int height)
         {
-            Game game = new Game()
+            return new Game()
             {
                 Width = width,
-                Height = heigth,
-            };
+                Height = height
+            }.Reset();
+        }
 
-            for (int x = 0; x < width; x++)
-                for (int y = 0; y < heigth; y++)
-                    game.Cells[(x,y)] = new Cell(x,y,game);
+        public Game Reset()
+        {
+            StartTime = EndTime = null;
+            State = GameState.Playing;
+            Cells.Clear();
+            MineCount = 0;
 
-            return game;
+            for (int x = 0; x < Width; x++)
+                for (int y = 0; y < Height; y++)
+                    Cells[(x, y)] = new Cell(x, y, this);
+
+            return this;
         }
 
         public Game SetMine(int x, int y)
