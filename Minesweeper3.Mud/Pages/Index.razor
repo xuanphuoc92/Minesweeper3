@@ -10,10 +10,10 @@
 <div class="d-flex justify-space-around flex-grow-1 gap-4 align-center">
     <div>
         <MudText>Mines</MudText>
-        <MudText Typo="Typo.h6">000</MudText>
+        <MudText Typo="Typo.h6">@Game.MineCount</MudText>
     </div>
     <MudButton Variant="Variant.Filled" OnClick="NewGame">
-        <MudIcon Icon="@Icons.Material.Filled.EmojiEmotions" Size="Size.Large" />
+        <MudIcon Icon="@Icons.Material.Filled.EmojiEmotions" Size="Size.Large" Color="@GetGameColor()" />
     </MudButton>
     <div>
         <MudText>Time</MudText>
@@ -75,6 +75,16 @@
             CellBackground.WrongFlag => Colors.Red.Lighten3,
             CellBackground.Picked => Colors.Grey.Darken2,
             _ => "none"
+        };
+    }
+
+    private Color GetGameColor()
+    {
+        return Game.State switch
+        {
+            GameState.Win => Color.Success,
+            GameState.Lose => Color.Error,
+            _ => Color.Warning
         };
     }
 }
