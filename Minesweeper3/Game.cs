@@ -205,6 +205,20 @@ namespace Minesweeper3
                 return CellContent.Empty;
             }
         }
+
+        public CellBackground Background
+        {
+            get
+            {
+                if (IsPicked && IsMine)
+                    return CellBackground.PickedMine;
+                if (State == CellState.Flagged && IsMine == false && Game.State == GameState.Lose)
+                    return CellBackground.WrongFlag;
+                if (IsPicked)
+                    return CellBackground.Picked;
+                return CellBackground.Default;
+            }
+        }
     }
 
     public enum CellState
@@ -215,5 +229,10 @@ namespace Minesweeper3
     public enum CellContent
     {
         Empty, Number, Mine, Flag
+    }
+
+    public enum CellBackground
+    {
+        Default, Picked, WrongFlag, PickedMine
     }
 }
